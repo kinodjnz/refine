@@ -1,0 +1,58 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.1'
+    id 'scala'
+    id 'application'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = [
+            "-deprecation",
+            "-unchecked",
+            "-feature",
+            "-Xlint",
+            "-Xfatal-warnings",
+    ]
+}
+
+repositories {
+    jcenter()
+}
+
+ext {
+    scalaVersion = '2.13'
+}
+
+dependencies {
+    // Use Scala 2.13 in our library project
+    implementation 'org.scala-lang:scala-library:2.13.3'
+    implementation 'org.scala-lang:scala-compiler:2.13.3'
+
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    runtimeOnly('org.springframework.boot:spring-boot-starter-jetty')
+
+    // Use Scalatest for testing our library
+    testImplementation 'junit:junit:4.13'
+    testImplementation "org.scalatest:scalatest_${scalaVersion}:3.2.2"
+    testImplementation "org.scalatestplus:junit-4-12_${scalaVersion}:3.2.2.0"
+
+    implementation "com.beachape:enumeratum_${scalaVersion}:1.6.1"
+
+    implementation "javax.validation:validation-api:2.0.1.Final"
+
+    implementation "org.hibernate.validator:hibernate-validator:6.0.22.Final"
+}
+
+bootJar {
+    mainClass = 'mobile.boot.BootApplication'
+}
+
+task repl(type: JavaExec) {
+    main = "scala.tools.nsc.MainGenericRunner"
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput System.in
+    args '-usejavacp'
+}
