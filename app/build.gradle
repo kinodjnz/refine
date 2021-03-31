@@ -49,6 +49,8 @@ dependencies {
     implementation "eu.timepit:refined_${scalaVersion}:0.9.22"
 
     implementation "io.estatico:newtype_${scalaVersion}:0.4.4"
+
+    implementation "org.typelevel:cats-core_${scalaVersion}:2.5.0"
 }
 
 bootJar {

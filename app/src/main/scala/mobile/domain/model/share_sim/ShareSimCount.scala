@@ -16,7 +16,8 @@ case class ShareSimCount(count: Int Refined CountType) {
     } yield (ShareSimCount(newCount))
   }
 
-  def increase(x: Int Refined IncreasableCountType): Int Refined CountType = unsafeWrap(x + 1)
+  //def increase(x: Int Refined IncreasableCountType): Int Refined CountType = unsafeWrap(x + 1)
+  def increase(x: Int Refined IncreasableCountType): Int Refined CountType = x + 1
 }
 
 object ShareSimCount {
