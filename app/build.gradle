@@ -13,6 +13,7 @@ tasks.withType(ScalaCompile) {
             "-feature",
             "-Xlint",
             "-Xfatal-warnings",
+            "-Ymacro-annotations",
     ]
 }
 
@@ -44,6 +45,10 @@ dependencies {
     implementation "javax.validation:validation-api:2.0.1.Final"
 
     implementation "org.hibernate.validator:hibernate-validator:6.0.22.Final"
+
+    implementation "eu.timepit:refined_${scalaVersion}:0.9.22"
+
+    implementation "io.estatico:newtype_${scalaVersion}:0.4.4"
 }
 
 bootJar {
@@ -55,4 +60,8 @@ task repl(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     standardInput System.in
     args '-usejavacp'
+}
+
+task classpath {
+    println(sourceSets.main.runtimeClasspath.asPath)
 }
